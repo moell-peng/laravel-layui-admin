@@ -133,32 +133,32 @@ class LayuiAdminTableSeeder extends Seeder
             'pg_id' => 3
         ],
         [
-            'name' => 'menu.index',
+            'name' => 'navigation.index',
             'display_name' => 'index',
             'pg_id' => 4
         ],
         [
-            'name' => 'menu.my',
-            'display_name' => 'My menu',
+            'name' => 'navigation.my',
+            'display_name' => 'My navigation',
             'pg_id' => 4
         ],
         [
-            'name' => 'menu.show',
+            'name' => 'navigation.show',
             'display_name' => 'show',
             'pg_id' => 4
         ],
         [
-            'name' => 'menu.store',
+            'name' => 'navigation.store',
             'display_name' => 'store',
             'pg_id' => 4
         ],
         [
-            'name' => 'menu.update',
+            'name' => 'navigation.update',
             'display_name' => 'update',
             'pg_id' => 4
         ],
         [
-            'name' => 'menu.destroy',
+            'name' => 'navigation.destroy',
             'display_name' => 'destroy',
             'pg_id' => 4
         ],
@@ -217,7 +217,7 @@ class LayuiAdminTableSeeder extends Seeder
 
         $this->createPermission();
 
-        $this->createMenu();
+        $this->createNavigation();
 
         $this->associateRolePermissions();
     }
@@ -290,7 +290,7 @@ class LayuiAdminTableSeeder extends Seeder
     /**
      * @author moell<moel91@foxmail.com>
      */
-    private function createMenu()
+    private function createNavigation()
     {
         Navigation::truncate();
         Navigation::insert([
@@ -337,7 +337,7 @@ class LayuiAdminTableSeeder extends Seeder
             [
                 'id'        => 6,
                 'parent_id' => 1,
-                'uri'       => '/admin/menu',
+                'uri'       => '/admin/navigation',
                 'name'      => '导航菜单',
                 'icon'      => '',
                 'guard_name'=> "admin"

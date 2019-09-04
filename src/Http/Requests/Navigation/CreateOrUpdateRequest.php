@@ -1,6 +1,6 @@
 <?php
 
-namespace Moell\LayuiAdmin\Http\Requests\Menu;
+namespace Moell\LayuiAdmin\Http\Requests\Navigation;
 
 
 use Illuminate\Foundation\Http\FormRequest;

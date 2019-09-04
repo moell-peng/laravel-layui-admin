@@ -12,11 +12,11 @@ $router->namespace('\Moell\LayuiAdmin\Http\Controllers')
         $router->resource('permission', 'PermissionController');
         $router->resource('admin-user', 'AdminUserController');
         $router->resource('permission-group', 'PermissionGroupController');
+        $router->resource('navigation', 'NavigationController');
         $router->get('admin-user/{id}/assign-roles', 'AdminUserController@assignRolesForm')->name('admin-user.assign-roles-form');
         $router->put('admin-user/{id}/assign-roles', 'AdminUserController@assignRoles')->name('admin-user.assign-roles');
         $router->get('role/{id}/assign-permissions', 'RoleController@assignPermissionsForm')->name('role.assign-permissions-form');
         $router->put('role/{id}/assign-permissions', 'RoleController@assignPermissions')->name('role.assign-permissions');
-
 
 
         $router->get('guard-name-for-permissions/{guardName}', 'PermissionGroupController@guardNameForPermissions')
@@ -24,9 +24,7 @@ $router->namespace('\Moell\LayuiAdmin\Http\Controllers')
 
         $router->get("permission-group-all", "PermissionGroupController@all")->name("permission-group.all");
 
-        $router->resource('menu', 'MenuController', ['only' =>
-            ['index', 'show', 'store', 'update', 'destroy']
-        ]);
+
 
     });
 

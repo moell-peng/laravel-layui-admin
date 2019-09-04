@@ -70,7 +70,7 @@
     });
   };
 
-  Admin.prototype.tableDataDelete = function (url, th) {
+  Admin.prototype.tableDataDelete = function (url, th, isRefresh) {
     layui.layer.confirm('你确认删除吗？', {
       btn: ['删除', '取消']
     }, function () {
@@ -78,6 +78,10 @@
         type: "DELETE",
         url: url,
         success: function() {
+          if (isRefresh) {
+            window.location = window.location.href
+            return false;
+          }
           $(th).parent().parent().parent().remove();
           layui.layer.close();
           layui.layer.msg("删除成功", {time: 2000, icon: 6})
@@ -138,6 +142,10 @@
   win.admin = new Admin();
 }(window);
 
+layui.config({
+  base: "/vendor/laravel-layui-admin/js/"
+});
+
 layui.use("jquery", function() {
   $ = layui.jquery;
 
@@ -147,17 +155,3 @@ layui.use("jquery", function() {
     }
   });
 });
-
-function permissionAllCheck(th) {
-  console.log($(th).parent().find(".no-check"), $(th));
-  $(th).parent().find(".no-check").prop("checked", false);
-  $(th).parent().parent().parent().nextAll().find("input[name='id[]']").prop("checked", true);
-  layui.form.render();
-}
-
-function permissionNoCheck(th) {
-  console.log($(th).parent().find(".no-check"), $(th));
-  $(th).parent().find(".all-check").prop("checked", false);
-  $(th).parent().parent().parent().nextAll().find("input[name='id[]']").prop("checked", false);
-  layui.form.render();
-}

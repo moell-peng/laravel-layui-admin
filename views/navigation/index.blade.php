@@ -13,7 +13,19 @@
     <div class="layui-card-body ">
         <form class="layui-form layui-col-space5" id="search-form">
             <div class="layui-inline layui-show-xs-block">
-                <a class="layui-btn layui-btn-sm" onclick="admin.openLayerForm('{{ route("permission-group.create") }}', '添加', 'POST', '400px', '200px')"><i class="layui-icon"></i>添加</a>
+                <input type="text" name="type"  placeholder="请输入导航类型" value="{{ request("type") }}" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <select name="guard_name">
+                <option value="">请选择Guard</option>
+                {!! admin_enum_option_string("guard_names", request("guard_name")) !!}
+              </select>
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <a class="layui-btn" onclick="admin.openLayerForm('{{ route("navigation.create") }}', '添加', 'POST', '700px', '500px')"><i class="layui-icon"></i>添加</a>
             </div>
         </form>
     </div>
@@ -24,9 +36,6 @@
 
 @section("script")
     <script>
-      layui.config({
-        base: "../vendor/laravel-layui-admin/js/"
-      });
       layui.use(['form', 'table', 'treeTable'], function(){
         var table = layui.table;
         var form = layui.form;
@@ -35,13 +44,17 @@
         var treeTable = layui.treeTable;
         treeTable.render({
           elem: '#tree-table',
-          data: {!! $menus !!},
+          data: {!! $navigation !!},
           icon_key: 'name',
           parent_key: "parent_id",
           end: function(e){
             form.render();
           },
           cols: [
+            {
+              key: 'id',
+              title: 'ID',
+            },
             {
               key: 'name',
               title: '名称',
@@ -54,6 +67,10 @@
                   return '<span style="color:#aaa;">'+item.name+'</span>';
                 }
               }
+            },
+            {
+              key: 'parent_id',
+              title: '父级ID',
             },
             {
               key: 'uri',
@@ -85,10 +102,18 @@
               title: '操作',
               align: 'center',
               template: function(item){
-                return '<a lay-filter="add">添加</a> | <a target="_blank" href="/detail?id='+item.id+'">编辑</a>';
+                return '<a lay-filter="delete">删除</a> | <a  lay-filter="edit">编辑</a>';
               }
             }
           ]
+        });
+
+        treeTable.on('tree(delete)', function (data) {
+          admin.tableDataDelete("/admin/navigation/" + data.item.id, data, true);
+        });
+
+        treeTable.on('tree(edit)', function (data) {
+          admin.openLayerForm("/admin/navigation/" + data.item.id + "/edit", "编辑", 'PATCH', '700px', '500px');
         });
       });
     </script>
