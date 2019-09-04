@@ -10,9 +10,8 @@ use Moell\LayuiAdmin\Http\Requests\ChangePasswordRequest;
 class ChangePasswordController extends Controller
 {
     /**
-     * @author moell
      * @param ChangePasswordRequest $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function changePassword(ChangePasswordRequest $request)
     {
@@ -27,6 +26,6 @@ class ChangePasswordController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return $this->noContent();
+        return $this->success();
     }
 }

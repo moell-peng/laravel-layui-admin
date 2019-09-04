@@ -16,6 +16,16 @@
                 <input type="text" name="name"  placeholder="请输名称" value="{{ request("name") }}" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-inline layui-show-xs-block">
+                @inject("permissionGroupPresenter", "Moell\LayuiAdmin\Presenters\PermissionGroupPresenter")
+                {!! $permissionGroupPresenter->makeSelect(request("pg_id")) !!}
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+                <select name="guard_name">
+                    <option value="">请选择Guard</option>
+                    {!! admin_enum_option_string("guard_names", request("guard_name")) !!}
+                </select>
+            </div>
+            <div class="layui-inline layui-show-xs-block">
                 <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
             </div>
         </form>
@@ -23,7 +33,7 @@
     <div class="layui-card-body ">
         <script type="text/html" id="toolbar">
             <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm" href="{{ route("permission.create") }}"><i class="layui-icon"></i>添加</a>
+                <a class="layui-btn layui-btn-sm" onclick="admin.openLayerForm('{{ route("permission.create") }}', '添加', 'POST', '600px', '500px')"><i class="layui-icon"></i>添加</a>
             </div>
         </script>
         <table  lay-filter="table-hide" style="display: none" lay-data="{height:'full-310', cellMinWidth: 80,toolbar: '#toolbar', limit: {{ $permissions->perPage() }} }">
@@ -52,9 +62,10 @@
                     <td>{{ $permission->created_at }}</td>
                     <td>{{ $permission->updated_at }}</td>
                     <td>
-                        <a class="layui-btn layui-btn-xs" href="{{ route("admin-user.edit", ['id' => $permission->id]) }}">编辑</a>
+                        <a class="layui-btn layui-btn-xs"
+                           onclick="admin.openLayerForm('{{ route("permission.edit", ['id' => $permission->id]) }}', '编辑', 'PATCH', '600px', '500px')">编辑</a>
                         <a class="layui-btn layui-btn-xs layui-btn-danger"
-                           onclick="admin.tableDataDelete('{{ route("admin-user.destroy", ['id' => $permission->id]) }}', this)">删除</a>
+                           onclick="admin.tableDataDelete('{{ route("permission.destroy", ['id' => $permission->id]) }}', this)">删除</a>
                     </td>
                 </tr>
             @endforeach

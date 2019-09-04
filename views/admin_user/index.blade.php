@@ -55,6 +55,8 @@
                     <td>
                         <a class="layui-btn layui-btn-xs"
                            onclick="admin.openLayerForm('{{ route("admin-user.edit", ['id' => $adminUser->id]) }}', '编辑', 'PATCH', '500px', '350px')">编辑</a>
+                        <a class="layui-btn layui-btn-xs"
+                           onclick="admin.openLayerForm('{{ route("admin-user.assign-roles-form", ['id' => $adminUser->id]) }}', '分配角色', 'PUT', '600px', '350px', true)">分配角色</a>
                         <a class="layui-btn layui-btn-xs layui-btn-danger"
                            onclick="admin.tableDataDelete('{{ route("admin-user.destroy", ['id' => $adminUser->id]) }}', this)">删除</a>
                     </td>

@@ -20,8 +20,6 @@ class AddCustomFieldPermissionTables extends Migration
             $table->string('display_name', 50)->nullable();
             $table->string('icon', 30)->nullable();
             $table->smallInteger('sequence')->nullable();
-            $table->string('created_name', 50)->nullable();
-            $table->string('updated_name', 50)->nullable();
             $table->string('description')->nullable();
         });
 
@@ -43,8 +41,6 @@ class AddCustomFieldPermissionTables extends Migration
             $table->dropColumn('display_name');
             $table->dropColumn('icon');
             $table->dropColumn('sequence');
-            $table->dropColumn('created_name');
-            $table->dropColumn('updated_name');
             $table->dropColumn('description');
         });
 

@@ -107,16 +107,30 @@ trait LayuiAdminResponse
     }
 
     /**
-     * 200
-     *
-     * @author moell<moel91@foxmail.com>
+     * @param string $message
      * @param array $data
-     * @param array $headers
-     * @param int $options
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function success(array $data, array $headers = [], $options = 0)
+    protected function success($message = '成功', array $data = [])
     {
-        return response()->json($data, Response::HTTP_OK, $headers, $options);
+        return response()->json([
+            'status' => 'success',
+            'message' => $message,
+            'data' => $data
+        ]);
+    }
+
+    /**
+     * @param string $message
+     * @param array $data
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function fail($message = '失败', array $data = [])
+    {
+        return response()->json([
+            'status' => 'fail',
+            'message' => $message,
+            'data' => $data
+        ]);
     }
 }

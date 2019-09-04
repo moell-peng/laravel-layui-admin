@@ -5,11 +5,9 @@ namespace Moell\LayuiAdmin\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Moell\LayuiAdmin\Http\Requests\Permission\CreateOrUpdateRequest;
-use Moell\LayuiAdmin\Resources\PermissionCollection;
 use Spatie\Permission\Exceptions\PermissionAlreadyExists;
 use Moell\LayuiAdmin\Models\Permission;
-use Moell\LayuiAdmin\Resources\Permission as PermissionResource;
-use Auth;
+
 
 class PermissionController extends Controller
 {
@@ -40,38 +38,49 @@ class PermissionController extends Controller
         return new PermissionResource(Permission::query()->findOrFail($id));
     }
 
+    public function create()
+    {
+        return view("admin::permission.create");
+    }
+
     /**
      * @author moell<moell91@foxmail.com>
      * @param CreateOrUpdateRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateOrUpdateRequest $request)
     {
         $attributes = $request->only([
-            'pg_id', 'name', 'guard_name', 'display_name', 'icon', 'sequence', 'description'
+            'pg_id', 'name', 'guard_name', 'display_name', 'sequence', 'description'
         ]);
-        $attributes['created_name'] = Auth::user()->name;
 
         Permission::create($attributes);
 
-        return $this->created();
+        return $this->success();
+    }
+
+    /**
+     * @param Permission $permission
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Permission $permission)
+    {
+        return view("admin::permission.edit", compact("permission"));
     }
 
     /**
      * @author moell<moell91@foxmail.com>
      * @param CreateOrUpdateRequest $request
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(CreateOrUpdateRequest $request, $id)
     {
         $permission = Permission::query()->findOrFail($id);
 
         $attributes = $request->only([
-            'pg_id', 'name', 'guard_name', 'display_name', 'icon', 'sequence', 'description'
+            'pg_id', 'name', 'guard_name', 'display_name', 'sequence', 'description'
         ]);
-
-        $attributes['updated_name'] = Auth::user()->name;
 
         $isset = Permission::query()
             ->where(['name' => $attributes['name'], 'guard_name' => $attributes['guard_name']])
@@ -84,27 +93,18 @@ class PermissionController extends Controller
 
         $permission->update($attributes);
 
-        return $this->noContent();
+        return $this->success();
     }
 
     /**
      * @author moell<moell91@foxmail.com>
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
         permission::query()->findOrFail($id)->delete();
 
-        return $this->noContent();
-    }
-
-    /**
-     * @author moell<moell91@foxmail.com>
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function allUserPermission()
-    {
-        return response()->json(['data' => Auth::user()->getAllPermissions()->pluck('name')]);
+        return $this->success();
     }
 }

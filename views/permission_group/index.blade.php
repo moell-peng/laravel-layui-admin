@@ -23,7 +23,7 @@
     <div class="layui-card-body ">
         <script type="text/html" id="toolbar">
             <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm" href="{{ route("permission-group.create") }}"><i class="layui-icon"></i>添加</a>
+                <a class="layui-btn layui-btn-sm" onclick="admin.openLayerForm('{{ route("permission-group.create") }}', '添加', 'POST', '400px', '200px')"><i class="layui-icon"></i>添加</a>
             </div>
         </script>
         <table  lay-filter="table-hide" style="display: none" lay-data="{height:'full-310', cellMinWidth: 80,toolbar: '#toolbar', limit: {{ $permissionGroups->perPage() }} }">
@@ -42,9 +42,10 @@
                     <td>{{ $group->created_at }}</td>
                     <td>{{ $group->updated_at }}</td>
                     <td>
-                        <a class="layui-btn layui-btn-xs" href="{{ route("admin-user.edit", ['id' => $group->id]) }}">编辑</a>
+                        <a class="layui-btn layui-btn-xs"
+                           onclick="admin.openLayerForm('{{ route("permission-group.edit", ['id' => $group->id]) }}', '编辑', 'PATCH', '500px', '200px')">编辑</a>
                         <a class="layui-btn layui-btn-xs layui-btn-danger"
-                           onclick="admin.tableDataDelete('{{ route("admin-user.destroy", ['id' => $group->id]) }}', this)">删除</a>
+                           onclick="admin.tableDataDelete('{{ route("permission-group.destroy", ['id' => $group->id]) }}', this)">删除</a>
                     </td>
                 </tr>
             @endforeach

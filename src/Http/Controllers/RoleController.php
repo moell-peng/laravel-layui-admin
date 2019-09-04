@@ -2,12 +2,9 @@
 
 namespace Moell\LayuiAdmin\Http\Controllers;
 
-use Auth;
 use Illuminate\Http\Request;
 use Moell\LayuiAdmin\Http\Requests\Role\CreateOrUpdateRequest;
-use Moell\LayuiAdmin\Resources\PermissionCollection;
-use Moell\LayuiAdmin\Resources\RoleCollection;
-use Moell\LayuiAdmin\Resources\Role as RoleResource;
+use Moell\LayuiAdmin\Models\PermissionGroup;
 use Spatie\Permission\Exceptions\RoleAlreadyExists;
 use Spatie\Permission\Models\Role;
 
@@ -26,25 +23,20 @@ class RoleController extends Controller
         return view("admin::role.index", compact("roles"));
     }
 
-    /**
-     * @author moell<moell91@foxmail.com>
-     * @param $guardName
-     * @return RoleCollection
-     */
-    public function guardNameRoles($guardName)
-    {
-        return new RoleCollection(Role::query()->where('guard_name', $guardName)->get());
-    }
-
     public function show($id)
     {
         return new RoleResource(Role::query()->findOrFail($id));
     }
 
+    public function create()
+    {
+        return view('admin::role.create');
+    }
+
     /**
      * @author moell<moell91@foxmail.com>
      * @param CreateOrUpdateRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateOrUpdateRequest $request)
     {
@@ -52,14 +44,19 @@ class RoleController extends Controller
             'name', 'guard_name', 'description'
         ]));
 
-        return $this->created();
+        return $this->success();
+    }
+
+    public function edit(Role $role)
+    {
+        return view("admin::role.edit", compact("role"));
     }
 
     /**
      * @author moell<moell91@foxmail.com>
      * @param CreateOrUpdateRequest $request
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(CreateOrUpdateRequest $request, $id)
     {
@@ -73,31 +70,36 @@ class RoleController extends Controller
             'name', 'guard_name', 'description'
         ]));
 
-        return $this->noContent();
+        return $this->success();
     }
 
     /**
      * @author moell<moell91@foxmail.com>
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
         Role::destroy($id);
 
-        return $this->noContent();
+        return $this->success();
     }
 
-    /**
-     * @author moell<moell91@foxmail.com>
-     * @param $id
-     * @return PermissionCollection
-     */
-    public function permissions($id)
+    public function assignPermissionsForm(Request $request, $id)
     {
         $role = Role::query()->findOrFail($id);
 
-        return new PermissionCollection($role->permissions);
+        $permissionGroups = PermissionGroup::query()
+            ->with(['permission' => function ($query) use ($role) {
+                $query->where('guard_name', $role->guard_name);
+            }])
+            ->get()->filter(function($item)  {
+                return count($item->permission) > 0;
+            });
+
+        $rolePermissions = $role->getPermissionNames();
+
+        return view("admin::role.assign_permission", compact("role", "permissionGroups", 'rolePermissions'));
     }
 
     /**
@@ -106,7 +108,7 @@ class RoleController extends Controller
      * @author moell<moell91@foxmail.com>
      * @param $id
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return $this
      */
     public function assignPermissions($id, Request $request)
     {
@@ -114,6 +116,6 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->input('permissions', []));
 
-        return $this->noContent();
+        return redirect()->back()->with("success", "分配权限成功");
     }
 }

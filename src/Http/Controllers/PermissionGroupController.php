@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Moell\LayuiAdmin\Http\Requests\PermissionGroup\CreateOrUpdateRequest;
 use Moell\LayuiAdmin\Models\PermissionGroup;
 use Moell\LayuiAdmin\Models\Permission;
-use Moell\LayuiAdmin\Resources\PermissionGroupCollection;
-use Moell\LayuiAdmin\Resources\PermissionGroup as PermissionGroupResource;
 
 class PermissionGroupController extends Controller
 {
@@ -33,63 +31,27 @@ class PermissionGroupController extends Controller
     }
 
     /**
-     *  @author moell<moell91@foxmail.com>
-     * @param Request $request
-     * @return PermissionGroupCollection
-     */
-    public function all(Request $request)
-    {
-        $permissionGroups = PermissionGroup::latest()->get();
-
-        return new PermissionGroupCollection($permissionGroups);
-    }
-
-    /**
-     * @param $guardName
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function guardNameForPermissions($guardName)
-    {
-        $permissionGroups = PermissionGroup::query()
-            ->with(['permission' => function ($query) use ($guardName) {
-                $query->where('guard_name', $guardName);
-            }])
-            ->get()->filter(function($item)  {
-                return count($item->permission) > 0;
-            });
-
-        return response()->json([
-            'data' => array_values($permissionGroups->toArray())
-        ]);
-    }
-
-    /**
      * @author moell<moell91@foxmail.com>
      * @param CreateOrUpdateRequest $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateOrUpdateRequest $request)
     {
         PermissionGroup::create(request_intersect(['name']));
 
-        return $this->created();
+        return $this->success();
     }
 
-    /**
-     * @author moell<moell91@foxmail.com>
-     * @param $id
-     * @return PermissionGroupResource
-     */
-    public function show($id)
+    public function edit(PermissionGroup $permissionGroup)
     {
-        return new PermissionGroupResource(PermissionGroup::findOrFail($id));
+        return view("admin::permission_group.edit", compact("permissionGroup"));
     }
 
     /**
      * @author moell<moell91@foxmail.com>
      * @param CreateOrUpdateRequest $request
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(CreateOrUpdateRequest $request, $id)
     {
@@ -97,12 +59,12 @@ class PermissionGroupController extends Controller
             'name'
         ]));
 
-        return $this->noContent();
+        return $this->success();
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
@@ -116,6 +78,6 @@ class PermissionGroupController extends Controller
 
         $permissionGroup->delete();
 
-        return $this->noContent();
+        return $this->success();
     }
 }

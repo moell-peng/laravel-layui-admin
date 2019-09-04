@@ -44,13 +44,18 @@ class LayuiAdminTableSeeder extends Seeder
         ],
         [
             'name' => 'admin-user.roles',
-            'display_name' => 'role list',
+            'display_name' => '角色列表',
             'pg_id' => 1
         ],
         [
             'name' => 'admin-user.assign-roles',
-            'display_name' => 'assign role',
+            'display_name' => '分配角色',
             'pg_id' => 1
+        ],
+        [
+            'name' => 'admin-user.assign-roles-form',
+            'display_name' => '分配角色页面',
+            'pg_id' => 1,
         ],
         [
             'name' => 'role.index',
@@ -84,7 +89,12 @@ class LayuiAdminTableSeeder extends Seeder
         ],
         [
             'name' => 'role.assign-permissions',
-            'display_name' => 'role assignment authority',
+            'display_name' => '角色分配权限',
+            'pg_id' => 2
+        ],
+        [
+            'name' => 'role.assign-permissions-form',
+            'display_name' => '角色分配权限页',
             'pg_id' => 2
         ],
         [

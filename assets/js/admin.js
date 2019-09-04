@@ -89,7 +89,7 @@
     });
   };
 
-  Admin.prototype.openLayerForm = function (url, title, method, width, height, formId) {
+  Admin.prototype.openLayerForm = function (url, title, method, width, height, noRefresh, formId) {
     var formId = formId ? formId : "#layer-form";
     $.get(url, function(view) {
       layui.layer.open({
@@ -98,6 +98,9 @@
         anim: 2,
         shadeClose: true,
         content: view,
+        success: function() {
+          layui.form.render();
+        },
         area:[
           width ? width : '50%',
           height ? height : '500px'
@@ -110,9 +113,16 @@
             url: formObj.attr("action"),
             dataType: "json",
             data: formObj.serialize(),
-            success: function() {
-              layui.layer.close(index);
-              layui.layer.msg("成功", {time: 2000, icon: 6})
+            success: function(response) {
+              if (response.status === 'success') {
+                layui.layer.close(index);
+                layui.layer.msg(response.message, {time: 2000, icon: 6})
+                if (!noRefresh) {
+                  window.location = window.location.href
+                }
+              } else {
+                layui.layer.msg(response.message, {time: 3000, icon: 5})
+              }
             },
             error: ajaxError
           });
@@ -137,3 +147,17 @@ layui.use("jquery", function() {
     }
   });
 });
+
+function permissionAllCheck(th) {
+  console.log($(th).parent().find(".no-check"), $(th));
+  $(th).parent().find(".no-check").prop("checked", false);
+  $(th).parent().parent().parent().nextAll().find("input[name='id[]']").prop("checked", true);
+  layui.form.render();
+}
+
+function permissionNoCheck(th) {
+  console.log($(th).parent().find(".no-check"), $(th));
+  $(th).parent().find(".all-check").prop("checked", false);
+  $(th).parent().parent().parent().nextAll().find("input[name='id[]']").prop("checked", false);
+  layui.form.render();
+}

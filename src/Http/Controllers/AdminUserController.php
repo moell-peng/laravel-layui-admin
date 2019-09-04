@@ -4,15 +4,9 @@ namespace Moell\LayuiAdmin\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use Auth;
-use Illuminate\Http\Response;
-use Moell\LayuiAdmin\AdminUserFactory;
 use Moell\LayuiAdmin\Http\Requests\AdminUser\CreateOrUpdateRequest;
 use Moell\LayuiAdmin\Models\AdminUser;
-use Moell\LayuiAdmin\Models\Permission;
-use Moell\LayuiAdmin\Resources\AdminUser as AdminUserResource;
-use Moell\LayuiAdmin\Resources\AdminUserCollection;
-use Moell\LayuiAdmin\Resources\RoleCollection;
+use Spatie\Permission\Models\Role;
 
 class AdminUserController extends Controller
 {
@@ -30,16 +24,6 @@ class AdminUserController extends Controller
     }
 
     /**
-     * @author moell<moel91@foxmail.com>
-     * @param $id
-     * @return AdminUserResource
-     */
-    public function show($id)
-    {
-        return new AdminUserResource($this->adminUserModel->findOrFail($id));
-    }
-
-    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
@@ -49,7 +33,7 @@ class AdminUserController extends Controller
 
     /**
      * @param CreateOrUpdateRequest $request
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateOrUpdateRequest $request)
     {
@@ -60,7 +44,7 @@ class AdminUserController extends Controller
 
         AdminUser::create($data);
 
-        return $this->noContent();
+        return $this->success();
     }
 
     /**
@@ -74,10 +58,9 @@ class AdminUserController extends Controller
 
     /**
      * @author moell<moel91@foxmail.com>
-     *
      * @param CreateOrUpdateRequest $request
      * @param AdminUser $adminUser
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(CreateOrUpdateRequest $request, AdminUser $adminUser)
     {
@@ -92,13 +75,13 @@ class AdminUserController extends Controller
         $adminUser->fill($data);
         $adminUser->save();
 
-        return $this->noContent();
+        return $this->success();
     }
 
     /**
      * @author moell<moel91@foxmail.com>
      * @param $id
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
@@ -106,44 +89,31 @@ class AdminUserController extends Controller
 
         $adminUser->delete();
 
-        return $this->noContent();
+        return $this->success();
     }
 
     /**
-     * @author moell<moell91@foxmail.com>
      * @param $id
-     * @param $provider
-     * @return RoleCollection
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function roles($id, $provider)
+    public function assignRolesForm($id)
     {
-        $user = $this->getProviderModel($provider)->findOrFail($id);
+        $adminUser = AdminUser::query()->findOrFail($id);
+        $roles = Role::query()->where("guard_name", "admin")->get();
+        $userRoles = $adminUser->getRoleNames();
 
-        return new RoleCollection($user->roles);
+        return view("admin::admin_user.assign_role", compact("roles", "adminUser", "userRoles"));
     }
 
     /**
-     * @author moell<moell91@foxmail.com>
-     * @param $id
-     * @param $provider
      * @param Request $request
-     * @return Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function assignRoles($id, $provider, Request $request)
+    public function assignRoles(Request $request, $id)
     {
-        $user = $this->getProviderModel($provider)->findOrFail($id);
+        AdminUser::query()->findOrFail($id)->syncRoles($request->input('roles', []));
 
-        $user->syncRoles($request->input('roles', []));
-
-        return $this->noContent();
-    }
-
-    /**
-     * @param $provider
-     * @return Illuminate\Foundation\Auth\User
-     */
-    private function getProviderModel($provider)
-    {
-        return app(config('auth.providers.' . $provider . '.model'));
+        return $this->success();
     }
 }

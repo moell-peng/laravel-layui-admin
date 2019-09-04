@@ -5,7 +5,7 @@ namespace Moell\LayuiAdmin\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Moell\LayuiAdmin\Http\Requests\Menu\CreateOrUpdateRequest;
-use Moell\LayuiAdmin\Models\Menu;
+use Moell\LayuiAdmin\Models\Navigation;
 use Moell\LayuiAdmin\Resources\Menu as MenuResource;
 use Auth;
 use SMartins\PassportMultiauth\Config\AuthConfigHelper;
@@ -19,12 +19,13 @@ class MenuController extends Controller
      */
     public function index(Request $request)
     {
-        $menus = Menu::query()
+        $menus = Navigation::query()
             ->where('guard_name', $request->input('guard_name', 'admin'))
             ->orderBy('sequence', 'desc')
-            ->get();
+            ->get()
+            ->toJson();
 
-        return response()->json(['data' => make_tree($menus->toArray())]);
+        return view("admin::menu.index", compact("menus"));
     }
     /**
      * @author moell<moell91@foxmail.com>
@@ -33,7 +34,7 @@ class MenuController extends Controller
      */
     public function store(CreateOrUpdateRequest $request)
     {
-        Menu::create($request->all());
+        Navigation::create($request->all());
 
         return $this->created();
     }
@@ -47,7 +48,7 @@ class MenuController extends Controller
         $guardName = AuthConfigHelper::getUserGuard(Auth::user());
 
         $userPermissions = Auth::user()->getAllPermissions()->pluck('name');
-        $menus = Menu::query()
+        $menus = Navigation::query()
             ->where('guard_name', $guardName)
             ->orderBy('sequence', 'desc')
             ->get()
@@ -66,7 +67,7 @@ class MenuController extends Controller
      */
     public function update(CreateOrUpdateRequest $request, $id)
     {
-        $menu = Menu::query()->findOrFail($id);
+        $menu = Navigation::query()->findOrFail($id);
 
         $menu->update($request->toArray());
 
@@ -80,7 +81,7 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        return new MenuResource(Menu::query()->findOrFail($id));
+        return new MenuResource(Navigation::query()->findOrFail($id));
     }
 
     /**
@@ -90,9 +91,9 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        $menu = Menu::query()->findOrFail($id);
+        $menu = Navigation::query()->findOrFail($id);
 
-        if (Menu::query()->where('parent_id', $menu->id)->count()) {
+        if (Navigation::query()->where('parent_id', $menu->id)->count()) {
             return $this->unprocesableEtity([
                 'parent_id' => 'Please delete the submenu first.'
             ]);

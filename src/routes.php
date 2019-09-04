@@ -9,22 +9,15 @@ $router->namespace('\Moell\LayuiAdmin\Http\Controllers')
         $router->get("/", "IndexController@index")->name("admin.index");
         $router->get("login", "AuthController@loginShowForm")->name("admin.login-show-form");
         $router->resource('role', 'RoleController');
-
-        $router->get('role/{id}/permissions', 'RoleController@permissions')->name('role.permissions');
-
-        $router->put('role/{id}/permissions', 'RoleController@assignPermissions')->name('role.assign-permissions');
-
-        $router->get('guard-name-roles/{guardName}', 'RoleController@guardNameRoles')->name('role.guard-name-roles');
-
         $router->resource('permission', 'PermissionController');
-
         $router->resource('admin-user', 'AdminUserController');
-
-        $router->get('admin-user/{id}/roles/{provider}', 'AdminUserController@roles')->name('admin-user.roles');
-
-        $router->put('admin-user/{id}/roles/{provider}', 'AdminUserController@assignRoles')->name('admin-user.assign-roles');
-
         $router->resource('permission-group', 'PermissionGroupController');
+        $router->get('admin-user/{id}/assign-roles', 'AdminUserController@assignRolesForm')->name('admin-user.assign-roles-form');
+        $router->put('admin-user/{id}/assign-roles', 'AdminUserController@assignRoles')->name('admin-user.assign-roles');
+        $router->get('role/{id}/assign-permissions', 'RoleController@assignPermissionsForm')->name('role.assign-permissions-form');
+        $router->put('role/{id}/assign-permissions', 'RoleController@assignPermissions')->name('role.assign-permissions');
+
+
 
         $router->get('guard-name-for-permissions/{guardName}', 'PermissionGroupController@guardNameForPermissions')
             ->name('permission-group.guard-name-for-permission');

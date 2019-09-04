@@ -40,3 +40,40 @@ if (!function_exists('make_tree')) {
         return $tree;
     }
 }
+
+if (!function_exists('admin_enum_index_value')) {
+    /**
+     *
+     * @param $field
+     * @param $index
+     * @return mixed|null
+     */
+    function admin_enum_index_value($field, $index) {
+        $config = config("admin." . $field);
+
+        return isset($config[$index]) ? $config[$index] : null;
+    }
+}
+
+if (!function_exists("admin_enum_option_string")) {
+    /**
+     * @param $field
+     * @param null $default
+     * @return null|string
+     */
+    function admin_enum_option_string($field, $default = null) {
+        $options = null;
+
+        $items = config("admin." . $field);
+        if (!$items) {
+            return $options;
+        }
+
+        foreach ($items as $index => $value) {
+            $checked = $index == $default ? 'selected' : '';
+            $options .= sprintf('<option value="%s" %s > %s</option>', $index, $checked,  $value);
+        }
+
+        return $options;
+    }
+}
