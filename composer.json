@@ -1,5 +1,6 @@
 {
     "name": "moell/laravel-layui-admin",
+    "description": "基于 Laravel, Layui 构建的 RABC 后台管理系统。",
     "keywords": ["laravel", "admin", "layui", "layui admin", "laravel layui admin", "laravel admin"],
     "type": "library",
     "license": "Apache-2.0",
