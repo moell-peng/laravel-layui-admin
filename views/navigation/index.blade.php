@@ -25,7 +25,9 @@
               <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
             </div>
             <div class="layui-inline layui-show-xs-block">
-              <a class="layui-btn" onclick="admin.openLayerForm('{{ route("navigation.create") }}', '添加', 'POST', '700px', '500px')"><i class="layui-icon"></i>添加</a>
+                @if(admin_user_can("navigation.create"))
+                    <a class="layui-btn" onclick="admin.openLayerForm('{{ route("navigation.create") }}', '添加', 'POST', '700px', '500px')"><i class="layui-icon"></i>添加</a>
+                @endif
             </div>
         </form>
     </div>
@@ -102,7 +104,8 @@
               title: '操作',
               align: 'center',
               template: function(item){
-                return '<a lay-filter="delete">删除</a> | <a  lay-filter="edit">编辑</a>';
+                return '@if(admin_user_can("navigation.destroy"))<a lay-filter="delete">删除</a>   @endif ' +
+                        '@if(admin_user_can("navigation.edit"))<a  lay-filter="edit">编辑</a>@endif';
               }
             }
           ]

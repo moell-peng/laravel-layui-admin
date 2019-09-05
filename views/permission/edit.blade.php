@@ -1,5 +1,5 @@
 <div class="layui-card-body ">
-    <form class="layui-form" method="post" action="{{ route("permission.update", ['id' => $permission->id]) }}" id="layer-form">
+    <form class="layui-form" method="post" action="{{ route("permission.update", ['permission' => $permission->id]) }}" id="layer-form">
         @csrf
         <div class="layui-form-item">
             <label class="layui-form-label">名称</label>
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">sequence</label>
+            <label class="layui-form-label">排序</label>
             <div class="layui-input-block">
                 <input type="text" name="sequence" value="{{ $permission->sequence }}" required  lay-verify="required" placeholder="请输入排序" autocomplete="off" class="layui-input">
             </div>

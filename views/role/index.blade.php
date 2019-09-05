@@ -23,7 +23,9 @@
     <div class="layui-card-body ">
         <script type="text/html" id="toolbar">
             <div class="layui-btn-container">
-                <a class="layui-btn layui-btn-sm" onclick="admin.openLayerForm('{{ route("role.create") }}', '添加', 'POST', '500px', '350px')"><i class="layui-icon"></i>添加</a>
+                @if(admin_user_can("role.create"))
+                    <a class="layui-btn layui-btn-sm" onclick="admin.openLayerForm('{{ route("role.create") }}', '添加', 'POST', '500px', '350px')"><i class="layui-icon"></i>添加</a>
+                @endif
             </div>
         </script>
         <table  lay-filter="table-hide" style="display: none" lay-data="{height:'full-310', cellMinWidth: 80,toolbar: '#toolbar', limit: {{ $roles->perPage() }} }">
@@ -44,12 +46,18 @@
                     <td>{{ $role->created_at }}</td>
                     <td>{{ $role->updated_at }}</td>
                     <td>
-                        <a class="layui-btn layui-btn-xs"
-                           onclick="admin.openLayerForm('{{ route("role.edit", ['id' => $role->id]) }}', '编辑', 'PATCH', '500px', '350px')">编辑</a>
-                        <a class="layui-btn layui-btn-xs"
-                           href="{{ route("role.assign-permissions-form", ['id' => $role->id]) }}">分配权限</a>
-                        <a class="layui-btn layui-btn-xs layui-btn-danger"
-                           onclick="admin.tableDataDelete('{{ route("role.destroy", ['id' => $role->id]) }}', this)">删除</a>
+                        @if(admin_user_can("role.edit"))
+                            <a class="layui-btn layui-btn-xs"
+                               onclick="admin.openLayerForm('{{ route("role.edit", ['role' => $role->id]) }}', '编辑', 'PATCH', '500px', '350px')">编辑</a>
+                        @endif
+                        @if(admin_user_can("role.assign-permissions-form"))
+                            <a class="layui-btn layui-btn-xs"
+                               href="{{ route("role.assign-permissions-form", ['id' => $role->id]) }}">分配权限</a>
+                        @endif
+                        @if(admin_user_can("role.destroy"))
+                            <a class="layui-btn layui-btn-xs layui-btn-danger"
+                               onclick="admin.tableDataDelete('{{ route("role.destroy", ['role' => $role->id]) }}', this)">删除</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

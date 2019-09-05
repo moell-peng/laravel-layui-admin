@@ -14,3 +14,21 @@
     overflow: hidden;
     background: #fff;
 }
+
+#admin-login {
+    width: 350px;
+    padding: 20px;
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -195px;
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+}
+
+#admin-login h2 {
+    text-align: center;
+    padding-bottom: 25px;
+}

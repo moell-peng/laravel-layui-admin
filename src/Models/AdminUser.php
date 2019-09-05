@@ -5,6 +5,7 @@ namespace Moell\LayuiAdmin\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
 class AdminUser extends Authenticatable

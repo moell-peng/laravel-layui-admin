@@ -77,3 +77,9 @@ if (!function_exists("admin_enum_option_string")) {
         return $options;
     }
 }
+
+if (!function_exists("admin_user_can")) {
+    function admin_user_can($permissionName) {
+        return auth()->guard("admin")->user()->can($permissionName);
+    }
+}

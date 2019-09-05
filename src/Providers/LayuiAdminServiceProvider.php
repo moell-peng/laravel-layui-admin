@@ -31,6 +31,10 @@ class LayuiAdminServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../views' => resource_path('views/vendor/laravel-layui-admin'),
         ]);
+
+        $this->publishes([
+            __DIR__.'/../../config/admin.php' => config_path('admin.php'),
+        ], 'config');
     }
 
     public function register()

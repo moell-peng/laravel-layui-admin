@@ -11,20 +11,21 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">后台管理系统</div>
+        <a href="{{ route("admin.index") }}">
+            <div class="layui-logo">{{ config("admin.system_name") }}</div>
+        </a>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    moell
+                    <img src="/vendor/laravel-layui-admin/images/30.jpeg" class="layui-nav-img">
+                    {{ auth("admin")->user()->name }}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
+                    <dd><a onclick="admin.openLayerForm('{{ route("admin.change-password-form") }}', '修改密码', 'PATCH', '500px', '300px')">修改密码</a></dd>
+                    <dd><a href="{{ route("admin.logout") }}">退出登录</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退了</a></li>
         </ul>
     </div>
 
@@ -34,11 +35,11 @@
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 @foreach($navigation as $topNav)
                     @if(isset($topNav['children']) && $topNav['children'])
-                        <li class="layui-nav-item layui-nav-itemed">
+                        <li class="layui-nav-item">
                             <a class="" href="javascript:;">{{ $topNav['name'] }}</a>
                             <dl class="layui-nav-child">
                                 @foreach ($topNav['children'] as $children)
-                                    <dd><a href="{{ $children['uri']  }}">{{ $children['name'] }}</a></dd>
+                                    <dd class="{{ request()->path() == trim($children['uri'], '/') ? 'layui-this' : '' }}"><a href="{{ $children['uri']  }}">{{ $children['name'] }}</a></dd>
                                 @endforeach
                             </dl>
                         </li>
@@ -65,7 +66,10 @@
     </div>
 
     <div class="layui-footer">
-        © moell/laravel-layui-admin
+        ©
+        <a href="https://github.com/moell-peng/laravel-layui-admin" target="_blank">
+            moell/laravel-layui-admin
+        </a>
     </div>
 </div>
 <script src="{{ asset('vendor/laravel-layui-admin/lib/layui/layui.js') }}"></script>

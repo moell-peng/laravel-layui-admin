@@ -6,42 +6,25 @@ $router->namespace('\Moell\LayuiAdmin\Http\Controllers')
     ->prefix('admin')
     ->middleware(['web'])
     ->group(function ($router) {
-        $router->get("/", "IndexController@index")->name("admin.index");
-        $router->get("login", "AuthController@loginShowForm")->name("admin.login-show-form");
-        $router->resource('role', 'RoleController');
-        $router->resource('permission', 'PermissionController');
-        $router->resource('admin-user', 'AdminUserController');
-        $router->resource('permission-group', 'PermissionGroupController');
-        $router->resource('navigation', 'NavigationController');
-        $router->get('admin-user/{id}/assign-roles', 'AdminUserController@assignRolesForm')->name('admin-user.assign-roles-form');
-        $router->put('admin-user/{id}/assign-roles', 'AdminUserController@assignRoles')->name('admin-user.assign-roles');
-        $router->get('role/{id}/assign-permissions', 'RoleController@assignPermissionsForm')->name('role.assign-permissions-form');
-        $router->put('role/{id}/assign-permissions', 'RoleController@assignPermissions')->name('role.assign-permissions');
+        $router->get("login", "LoginController@loginShowForm")->name("admin.login-show-form");
+        $router->post("login", "LoginController@login")->name("admin.login");
 
+        $router->middleware(['auth:admin'])->group(function($router) {
+            $router->get("/", "IndexController@index")->name("admin.index");
+            $router->get("logout", "LoginController@logout")->name("admin.logout");
+            $router->get("change-password", "ChangePasswordController@changePasswordForm")->name("admin.change-password-form");
+            $router->patch("change-password", "ChangePasswordController@changePassword")->name("admin.change-password");
 
-        $router->get('guard-name-for-permissions/{guardName}', 'PermissionGroupController@guardNameForPermissions')
-            ->name('permission-group.guard-name-for-permission');
-
-        $router->get("permission-group-all", "PermissionGroupController@all")->name("permission-group.all");
-
-
-
+            $router->middleware(['admin.permission'])->group(function($router) {
+                $router->resource('role', 'RoleController');
+                $router->resource('permission', 'PermissionController');
+                $router->resource('admin-user', 'AdminUserController');
+                $router->resource('permission-group', 'PermissionGroupController');
+                $router->resource('navigation', 'NavigationController');
+                $router->get('admin-user/{id}/assign-roles', 'AdminUserController@assignRolesForm')->name('admin-user.assign-roles-form');
+                $router->put('admin-user/{id}/assign-roles', 'AdminUserController@assignRoles')->name('admin-user.assign-roles');
+                $router->get('role/{id}/assign-permissions', 'RoleController@assignPermissionsForm')->name('role.assign-permissions-form');
+                $router->put('role/{id}/assign-permissions', 'RoleController@assignPermissions')->name('role.assign-permissions');
+            });
+        });
     });
-
-/*$router->namespace('\Moell\LayuiAdmin\Http\Controllers')
-    ->prefix('api')
-    ->middleware(['api', config('LayuiAdmin.super_admin.auth') . ',' . config('LayuiAdmin.multi_auth_guards'), 'LayuiAdmin.permission'])
-    ->group(function ($router) {
-        $router->get('permission-user-all', 'PermissionController@allUserPermission')->name('permission.all-user-permission');
-
-        $router->get('my-menu', 'MenuController@my')->name('menu.my');
-
-        $router->patch('user-change-password', 'ChangePasswordController@changePassword')->name('user.change-password');
-    });
-
-$router->namespace('\Moell\LayuiAdmin\Http\Controllers')->middleware('web')->group(function ($router) {
-    $router->view(config('LayuiAdmin.admin_route_path'), 'dashboard');
-});
-
-$router->middleware(['api', config('LayuiAdmin.super_admin.auth') . ',' . config('LayuiAdmin.multi_auth_guards')])
-    ->patch('api/user-change-password', '\Moell\LayuiAdmin\Http\Controllers\ChangePasswordController@changePassword')->name('user.change-password');*/

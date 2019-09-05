@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">sequence</label>
+            <label class="layui-form-label">排序</label>
             <div class="layui-input-block">
                 <input type="text" name="sequence" value="0" required  lay-verify="required" placeholder="请输入排序" autocomplete="off" class="layui-input">
             </div>

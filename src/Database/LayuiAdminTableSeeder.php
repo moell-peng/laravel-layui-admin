@@ -14,7 +14,7 @@ class LayuiAdminTableSeeder extends Seeder
     private $permissions = [
         [
             'name' => 'admin-user.index',
-            'display_name' => 'index',
+            'display_name' => '列表',
             'pg_id' => 1
         ],
         [
@@ -24,22 +24,27 @@ class LayuiAdminTableSeeder extends Seeder
         ],
         [
             'name' => 'admin-user.show',
-            'display_name' => 'show',
+            'display_name' => '详细',
             'pg_id' => 1
         ],
         [
             'name' => 'admin-user.store',
-            'display_name' => 'store',
+            'display_name' => '保存',
+            'pg_id' => 1
+        ],
+        [
+            'name' => 'admin-user.edit',
+            'display_name' => '编辑页',
             'pg_id' => 1
         ],
         [
             'name' => 'admin-user.update',
-            'display_name' => 'update',
+            'display_name' => '更新',
             'pg_id' => 1
         ],
         [
             'name' => 'admin-user.destroy',
-            'display_name' => 'destroy',
+            'display_name' => '删除',
             'pg_id' => 1
         ],
         [
@@ -59,32 +64,37 @@ class LayuiAdminTableSeeder extends Seeder
         ],
         [
             'name' => 'role.index',
-            'display_name' => 'index',
+            'display_name' => '角色列表',
             'pg_id' => 2
         ],
         [
             'name' => 'role.show',
-            'display_name' => 'show',
+            'display_name' => '详细',
+            'pg_id' => 2
+        ],
+        [
+            'name' => 'role.create',
+            'display_name' => '创建页',
             'pg_id' => 2
         ],
         [
             'name' => 'role.store',
-            'display_name' => 'store',
+            'display_name' => '保存',
+            'pg_id' => 2
+        ],
+        [
+            'name' => 'role.edit',
+            'display_name' => '编辑页',
             'pg_id' => 2
         ],
         [
             'name' => 'role.update',
-            'display_name' => 'update',
+            'display_name' => '更新',
             'pg_id' => 2
         ],
         [
             'name' => 'role.destroy',
-            'display_name' => 'destroy',
-            'pg_id' => 2
-        ],
-        [
-            'name' => 'role.permissions',
-            'display_name' => 'role permissions',
+            'display_name' => '删除',
             'pg_id' => 2
         ],
         [
@@ -98,105 +108,110 @@ class LayuiAdminTableSeeder extends Seeder
             'pg_id' => 2
         ],
         [
-            'name' => 'role.guard-name-roles',
-            'display_name' => 'Specify the role of guard name',
-            'pg_id' => 2
-        ],
-        [
             'name' => 'permission.index',
-            'display_name' => 'index',
+            'display_name' => '列表',
             'pg_id' => 3
         ],
         [
             'name' => 'permission.show',
-            'display_name' => 'show',
+            'display_name' => '详细',
+            'pg_id' => 3
+        ],
+        [
+            'name' => 'permission.create',
+            'display_name' => '创建页',
             'pg_id' => 3
         ],
         [
             'name' => 'permission.store',
-            'display_name' => 'store',
+            'display_name' => '保存',
+            'pg_id' => 3
+        ],
+        [
+            'name' => 'permission.edit',
+            'display_name' => '编辑页',
             'pg_id' => 3
         ],
         [
             'name' => 'permission.update',
-            'display_name' => 'update',
+            'display_name' => '更新',
             'pg_id' => 3
         ],
         [
             'name' => 'permission.destroy',
-            'display_name' => 'destroy',
-            'pg_id' => 3
-        ],
-        [
-            'name' => 'permission.all-user-permission',
-            'display_name' => 'All permissions of the user',
+            'display_name' => '删除',
             'pg_id' => 3
         ],
         [
             'name' => 'navigation.index',
-            'display_name' => 'index',
-            'pg_id' => 4
-        ],
-        [
-            'name' => 'navigation.my',
-            'display_name' => 'My navigation',
+            'display_name' => '列表',
             'pg_id' => 4
         ],
         [
             'name' => 'navigation.show',
-            'display_name' => 'show',
+            'display_name' => '详细',
+            'pg_id' => 4
+        ],
+        [
+            'name' => 'navigation.create',
+            'display_name' => '创建页',
             'pg_id' => 4
         ],
         [
             'name' => 'navigation.store',
-            'display_name' => 'store',
+            'display_name' => '保存',
+            'pg_id' => 4
+        ],
+        [
+            'name' => 'navigation.edit',
+            'display_name' => '编辑页',
             'pg_id' => 4
         ],
         [
             'name' => 'navigation.update',
-            'display_name' => 'update',
+            'display_name' => '更新',
             'pg_id' => 4
         ],
         [
             'name' => 'navigation.destroy',
-            'display_name' => 'destroy',
+            'display_name' => '删除',
             'pg_id' => 4
         ],
         [
             'name' => 'permission-group.index',
-            'display_name' => 'index',
+            'display_name' => '列表',
             'pg_id' => 5
         ],
         [
             'name' => 'permission-group.show',
-            'display_name' => 'show',
+            'display_name' => '详细',
+            'pg_id' => 5
+        ],
+        [
+            'name' => 'permission-group.create',
+            'display_name' => '创建页',
             'pg_id' => 5
         ],
         [
             'name' => 'permission-group.store',
-            'display_name' => 'store',
+            'display_name' => '保存',
+            'pg_id' => 5
+        ],
+        [
+            'name' => 'permission-group.edit',
+            'display_name' => '编辑页',
             'pg_id' => 5
         ],
         [
             'name' => 'permission-group.update',
-            'display_name' => 'update',
+            'display_name' => '更新',
             'pg_id' => 5
         ],
         [
             'name' => 'permission-group.destroy',
-            'display_name' => 'destroy',
+            'display_name' => '删除',
             'pg_id' => 5
         ],
-        [
-            'name' => 'permission-group.guard-name-for-permission',
-            'display_name' => 'Guard name for permissions',
-            'pg_id' => 5
-        ],
-        [
-            'name' => 'permission-group.all',
-            'display_name' => 'All permission groups',
-            'pg_id' => 5
-        ]
     ];
 
     /**
@@ -297,8 +312,9 @@ class LayuiAdminTableSeeder extends Seeder
             [
                 'id'        => 1,
                 'parent_id' => 0,
-                'uri'       => '/admin/admin',
-                'name'      => 'Admin',
+                'uri'       => '/admin',
+                'name'      => '设置',
+                'permission_name' => null,
                 'icon'      => '&#xe726;',
                 'guard_name'=> "admin"
             ],
@@ -307,6 +323,7 @@ class LayuiAdminTableSeeder extends Seeder
                 'parent_id' => 1,
                 'uri'       => '/admin/admin-user',
                 'name'      => '管理员',
+                'permission_name' => 'admin-user.index',
                 'icon'      => '',
                 'guard_name'=> "admin"
             ],
@@ -315,6 +332,7 @@ class LayuiAdminTableSeeder extends Seeder
                 'parent_id' => 1,
                 'uri'       => '/admin/role',
                 'name'      => '角色',
+                'permission_name' => 'role.index',
                 'icon'      => '',
                 'guard_name'=> "admin"
             ],
@@ -323,6 +341,7 @@ class LayuiAdminTableSeeder extends Seeder
                 'parent_id' => 1,
                 'uri'       => '/admin/permission',
                 'name'      => '权限',
+                'permission_name' => 'permission.index',
                 'icon'      => '',
                 'guard_name'=> "admin"
             ],
@@ -331,6 +350,7 @@ class LayuiAdminTableSeeder extends Seeder
                 'parent_id' => 1,
                 'uri'       => '/admin/permission-group',
                 'name'      => '权限组别',
+                'permission_name' => 'permission-group.index',
                 'icon'      => '',
                 'guard_name'=> "admin"
             ],
@@ -339,6 +359,7 @@ class LayuiAdminTableSeeder extends Seeder
                 'parent_id' => 1,
                 'uri'       => '/admin/navigation',
                 'name'      => '导航菜单',
+                'permission_name' => 'navigation.index',
                 'icon'      => '',
                 'guard_name'=> "admin"
             ],
