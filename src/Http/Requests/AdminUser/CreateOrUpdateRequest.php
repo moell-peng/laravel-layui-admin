@@ -37,6 +37,7 @@ class CreateOrUpdateRequest extends FormRequest
                 break;
             case 'PATCH':
                 $rules['password'] = 'nullable|min:8|max:32';
+                $rules['status'] = 'in:0,1';
                 break;
         }
 

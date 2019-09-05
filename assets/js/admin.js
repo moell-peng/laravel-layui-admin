@@ -122,7 +122,7 @@ layui.use("jquery", function() {
           msg = '请求格式不正确';
           break;
         case 410:
-          msg = responseText != "" ? responseText : '你访问的资源已被删除';
+          msg = '你访问的资源已被删除';
           break;
         case 422:
           var errors = $.parseJSON(XMLHttpRequest.responseText);
@@ -140,6 +140,9 @@ layui.use("jquery", function() {
             });
             msg = m;
           }
+          break;
+        case 429:
+          msg = '超出访问频率限制';
           break;
         case 500:
           msg = '500 INTERNAL SERVER ERROR';

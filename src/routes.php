@@ -7,7 +7,7 @@ $router->namespace('\Moell\LayuiAdmin\Http\Controllers')
     ->middleware(['web'])
     ->group(function ($router) {
         $router->get("login", "LoginController@loginShowForm")->name("admin.login-show-form");
-        $router->post("login", "LoginController@login")->name("admin.login");
+        $router->post("login", "LoginController@login")->name("admin.login")->middleware('throttle:20,1');
 
         $router->middleware(['auth:admin'])->group(function($router) {
             $router->get("/", "IndexController@index")->name("admin.index");

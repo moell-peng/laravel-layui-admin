@@ -16,6 +16,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
+        $credentials['status'] = 0;
 
         if (Auth::guard("admin")->attempt($credentials)) {
             return $this->success("登录成功");
