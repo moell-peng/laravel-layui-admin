@@ -28,6 +28,13 @@ class InstallCommand extends Command
     public function handle()
     {
         $this->call('vendor:publish', ['--provider' => 'Spatie\Permission\PermissionServiceProvider']);
-        $this->call('vendor:publish', ['--provider' => 'Moell\LayuiAdmin\Providers\LayuiAdminServiceProvider']);
+        $this->call('vendor:publish', [
+            '--provider' => 'Moell\LayuiAdmin\Providers\LayuiAdminServiceProvider',
+            '--tag' => 'config'
+        ]);
+        $this->call('vendor:publish', [
+            '--provider' => 'Moell\LayuiAdmin\Providers\LayuiAdminServiceProvider',
+            '--tag' => 'public'
+        ]);
     }
 }
