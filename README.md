@@ -1,12 +1,12 @@
 # Laravel-layui-admin
 
-基于 Laravel, Layui 构建的 RABC 基础后台管理系统。
+基于 Laravel, Layui 构建的 RBAC 基础后台管理系统。
 
 > 如果你想要 vue 版本的后台系统， 移步 [moell/mojito ](https://github.com/moell-peng/mojito)
 
 ## 截图
 
-![laravel-layui-admin.png](https://ws1.sinaimg.cn/large/7a679ca1gy1g6omhlvr4nj217y0ovn0d.jpg)
+![laravel-layui-admin.png](http://blog-image.moell.cn/laravel-layui-admin.png)
 
 ## 要求
 
@@ -94,8 +94,8 @@ password: secret
 ## 打赏
 
 <p>
-  <img src="http://ww1.sinaimg.cn/mw690/7a679ca1ly1fvxrfnvxa4j20dw0dwdic.jpg" width="250" />
-  <img src="http://ww1.sinaimg.cn/mw690/7a679ca1ly1fvxrfnr0dhj20dw0dwgp0.jpg" width="250" />
+  <img src="http://blog-image.moell.cn/alipay.jpg" width="250" />
+  <img src="http://blog-image.moell.cn/wepay.jpg" width="250" />
 </p>
 
 ## 交流
@@ -103,7 +103,7 @@ QQ群：339803849
 
 微信：扫码后拉入群
 <p>
-  <img src="http://ww1.sinaimg.cn/large/7a679ca1gy1fvym2d0xv1j20by0bywfb.jpg" width="250" />
+  <img src="http://blog-image.moell.cn/wx.jpg" width="250" />
 </p>
 
 ## License
