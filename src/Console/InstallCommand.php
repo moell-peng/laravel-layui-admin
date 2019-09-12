@@ -36,5 +36,10 @@ class InstallCommand extends Command
             '--provider' => 'Moell\LayuiAdmin\Providers\LayuiAdminServiceProvider',
             '--tag' => 'public'
         ]);
+
+        $this->call('vendor:publish', [
+            '--provider' => 'Moell\LayuiAdmin\Providers\LayuiAdminServiceProvider',
+            '--tag' => 'migrations'
+        ]);
     }
 }
