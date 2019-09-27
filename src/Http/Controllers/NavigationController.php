@@ -16,9 +16,13 @@ class NavigationController extends Controller
      */
     public function index(Request $request)
     {
+        $where = request_intersect(['type', 'guard_name']);
+        if (!isset($where['guard_name']) || !$where['guard_name']) {
+            $where['guard_name'] = 'admin';
+        }
+
         $navigation = Navigation::query()
-            ->where(request_intersect(['type']))
-            ->where('guard_name', $request->input('guard_name', 'admin'))
+            ->where($where)
             ->orderBy('sequence', 'desc')
             ->get()
             ->toJson();
