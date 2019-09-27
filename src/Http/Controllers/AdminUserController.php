@@ -64,7 +64,7 @@ class AdminUserController extends Controller
      */
     public function update(CreateOrUpdateRequest $request, AdminUser $adminUser)
     {
-        $data = request_intersect([
+        $data = $request->only([
             'name', 'status'
         ]);
 
